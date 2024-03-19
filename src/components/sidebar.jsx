@@ -74,7 +74,9 @@ const Sidebar = ({ isOpen, darkMode }) => {
         <Logo src="./assets/logo.png" alt="Logo" />
       </LogoContainer>
       <Nav>
-        <NavLinkStyled to="/admin/dashboard" activeClassName="active" darkMode={darkMode}>
+
+        {/* AdminSideBar */}
+        {/* <NavLinkStyled to="/admin/dashboard" activeClassName="active" darkMode={darkMode}>
           <DashboardIcon /> Dashboard
         </NavLinkStyled>
         <NavLinkStyled to="/admin/batches" activeClassName="active" darkMode={darkMode}>
@@ -100,7 +102,20 @@ const Sidebar = ({ isOpen, darkMode }) => {
         </NavLinkStyled>
         <NavLinkStyled to="/admin/user" activeClassName="active" darkMode={darkMode}>
           <UserIcon /> User
+        </NavLinkStyled> */}
+
+        {/* DeanSideBar */}
+        <NavLinkStyled to="/dean/dashboard" activeClassName="active" darkMode={darkMode}>
+          <DashboardIcon /> Dashboard
         </NavLinkStyled>
+        <NavLinkStyled to="/dean/internship" activeClassName="active" darkMode={darkMode}>
+          <BatchesIcon /> Internship
+        </NavLinkStyled>
+        <NavLinkStyled to="dean/evaluation" activeClassName="active" darkMode={darkMode}>
+          <FacultyIcon /> Evaluation
+        </NavLinkStyled>
+
+
       </Nav>
       <Copyright>© {currentYear} Xenosys. All rights reserved.</Copyright>
     </SidebarContainer>

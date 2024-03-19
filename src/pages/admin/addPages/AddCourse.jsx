@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Card, CardContent, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Typography } from '@mui/material';
+import { Card, CardContent, Grid } from '@mui/material';
 import styled from 'styled-components';
 import PrimaryButton from '../../../components/PrimaryButton';
-import { AddCircle } from '@mui/icons-material';
+import FormField from '../../../components/FormField.jsx';
 
 const PageContainer = styled.div`
   padding: 20px;
@@ -66,6 +66,26 @@ const AddCourse = () => {
     setCourseType('');
   };
 
+  const facultyOptions = [
+    { label: 'Faculty 1', value: 'faculty1' },
+    { label: 'Faculty 2', value: 'faculty2' },
+  ];
+
+  const departmentOptions = [
+    { label: 'Department 1', value: 'department1' },
+    { label: 'Department 2', value: 'department2' },
+  ];
+
+  const degreeProgramOptions = [
+    { label: 'Degree Program 1', value: 'degreeProgram1' },
+    { label: 'Degree Program 2', value: 'degreeProgram2' },
+  ];
+
+  const courseTypeOptions = [
+    { label: 'Course Type 1', value: 'courseType1' },
+    { label: 'Course Type 2', value: 'courseType2' },
+  ];
+
   return (
     <PageContainer>
       <HeadingContainer>
@@ -76,100 +96,67 @@ const AddCourse = () => {
         <CardContent>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Course Name"
-                  variant="outlined"
-                  value={courseName}
-                  onChange={(e) => setCourseName(e.target.value)}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth variant="outlined" required>
-                  <InputLabel id="faculty-label">Faculty</InputLabel>
-                  <Select
-                    labelId="faculty-label"
-                    value={faculty}
-                    onChange={(e) => setFaculty(e.target.value)}
-                    label="Faculty"
-                  >
-                    <MenuItem value="faculty1">Faculty 1</MenuItem>
-                    <MenuItem value="faculty2">Faculty 2</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth variant="outlined" required>
-                  <InputLabel id="department-label">Department</InputLabel>
-                  <Select
-                    labelId="department-label"
-                    value={department}
-                    onChange={(e) => setDepartment(e.target.value)}
-                    label="Department"
-                  >
-                    <MenuItem value="department1">Department 1</MenuItem>
-                    <MenuItem value="department2">Department 2</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth variant="outlined" required>
-                  <InputLabel id="degree-program-label">Degree Program</InputLabel>
-                  <Select
-                    labelId="degree-program-label"
-                    value={degreeProgram}
-                    onChange={(e) => setDegreeProgram(e.target.value)}
-                    label="Degree Program"
-                  >
-                    <MenuItem value="degreeProgram1">Degree Program 1</MenuItem>
-                    <MenuItem value="degreeProgram2">Degree Program 2</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Description"
-                  variant="outlined"
-                  multiline
-                  rows={4}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Number of Hours"
-                  variant="outlined"
-                  value={numberOfHours}
-                  onChange={(e) => setNumberOfHours(e.target.value)}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth variant="outlined" required>
-                  <InputLabel id="course-type-label">Course Type</InputLabel>
-                  <Select
-                    labelId="course-type-label"
-                    value={courseType}
-                    onChange={(e) => setCourseType(e.target.value)}
-                    label="Course Type"
-                  >
-                    <MenuItem value="courseType1">Course Type 1</MenuItem>
-                    <MenuItem value="courseType2">Course Type 2</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
+              <FormField
+                label="Course Name"
+                value={courseName}
+                onChange={(e) => setCourseName(e.target.value)}
+                variant="outlined"
+                fullWidth
+              />
+              <FormField
+                label="Faculty"
+                value={faculty}
+                onChange={(e) => setFaculty(e.target.value)}
+                variant="outlined"
+                select
+                options={facultyOptions}
+              />
+              <FormField
+                label="Department"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
+                variant="outlined"
+                select
+                options={departmentOptions}
+              />
+              <FormField
+                label="Degree Program"
+                value={degreeProgram}
+                onChange={(e) => setDegreeProgram(e.target.value)}
+                variant="outlined"
+                select
+                options={degreeProgramOptions}
+              />
+              <FormField
+                label="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                variant="outlined"
+                fullWidth
+                multiline
+                rows={4}
+              />
+              <FormField
+                label="Number of Hours"
+                value={numberOfHours}
+                onChange={(e) => setNumberOfHours(e.target.value)}
+                variant="outlined"
+                fullWidth
+              />
+              <FormField
+                label="Course Type"
+                value={courseType}
+                onChange={(e) => setCourseType(e.target.value)}
+                variant="outlined"
+                select
+                options={courseTypeOptions}
+              />
             </Grid>
             <PrimaryButton type="submit">
               Submit
             </PrimaryButton>
           </form>
-        </CardContent>
+        </CardContent> 
       </StyledCard>
     </PageContainer>
   );

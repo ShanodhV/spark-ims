@@ -22,6 +22,7 @@ import AddCourse from './pages/admin/addPages/AddCourse';
 import AddUser from './pages/admin/addPages/AddUser';
 import BulkUpload from './pages/admin/addPages/BulkUpload';
 import AddOrganization from './pages/admin/addPages/AddOrganization';
+import DeanDashboard from './pages/dean/Dashboard';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -37,7 +38,7 @@ function App() {
       <Router>
         <MainLayout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
           <Routes>
-            <Route path="/admin/dashboard" element={<Dashboard />} />
+            {/* <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/batches" element={<Batches />} />
             <Route path="/admin/addpages/add-batches" element={<AddBatches />} />
             <Route path="/admin/faculty" element={<Faculty />} />
@@ -53,10 +54,16 @@ function App() {
             <Route path="/admin/addPages/add-organization" element={<AddOrganization/>} />
             <Route path="/admin/user" element={<User />} />
             <Route path="/admin/addPages/add-user" element={<AddUser/>} />
-            <Route path="/admin/addPages/bulk-upload" element={<BulkUpload/>} />
+            <Route path="/admin/addPages/bulk-upload" element={<BulkUpload/>} /> */}
 
+            {/* Dean Routes */}
+            <Route path="/dean/dashboard" element={<DeanDashboard />} />
+            {/* <Route path="/dean/internship" element={<InternshipDean />} />
+            <Route path="/dean/evaluation" element={<EvaluationDean />} /> */}
           </Routes>
         </MainLayout>
+
+    
       </Router>
     </ThemeProvider>
   );
