@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Card, CardContent, Grid, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import React from 'react';
+import { Card, CardContent, Grid } from '@mui/material';
 import styled from 'styled-components';
 import PrimaryButton from '../../../components/PrimaryButton';
+import FormField from '../../../components/FormField'; // Import the updated FormField component
+import { useForm } from 'react-hook-form';
 
 const PageContainer = styled.div`
   padding: 20px;
@@ -34,129 +36,123 @@ const StyledCard = styled(Card)`
 `;
 
 const AddOrganization = () => {
-  const [organizationName, setOrganizationName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [address, setAddress] = useState('');
-  const [website, setWebsite] = useState('');
-  const [industry, setIndustry] = useState('');
-  const [size, setSize] = useState('');
+  const { control, handleSubmit, reset, formState: { errors } } = useForm(); // Destructure errors from formState
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add logic to handle form submission
-    console.log('Organization Name:', organizationName);
-    console.log('Email:', email);
-    console.log('Phone Number:', phoneNumber);
-    console.log('Address:', address);
-    console.log('Website:', website);
-    console.log('Industry:', industry);
-    console.log('Size:', size);
-    // Reset the input fields after submission
-    setOrganizationName('');
-    setEmail('');
-    setPhoneNumber('');
-    setAddress('');
-    setWebsite('');
-    setIndustry('');
-    setSize('');
+  const heading = 'Add Organization';
+  const path = ['Admin', 'Add Organization'];
+
+  const onSubmit = (data) => {
+    console.log(data);
+    reset();
   };
 
   return (
     <PageContainer>
       <HeadingContainer>
-        <Heading>Add Organization</Heading>
-        <Path>Admin / Add Organization</Path>
+        <Heading>{heading}</Heading>
+        <Path>{path.join(' / ')}</Path>
       </HeadingContainer>
-      <StyledCard variant="outlined">
-        <CardContent>
-          <form onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Organization Name"
-                  variant="outlined"
-                  value={organizationName}
-                  onChange={(e) => setOrganizationName(e.target.value)}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Email"
-                  variant="outlined"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Phone Number"
-                  variant="outlined"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Address"
-                  variant="outlined"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Website"
-                  variant="outlined"
-                  value={website}
-                  onChange={(e) => setWebsite(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth variant="outlined" required>
-                  <InputLabel id="industry-label">Industry</InputLabel>
-                  <Select
-                    labelId="industry-label"
-                    value={industry}
-                    onChange={(e) => setIndustry(e.target.value)}
-                    label="Industry"
-                  >
-                    <MenuItem value="industry1">Industry 1</MenuItem>
-                    <MenuItem value="industry2">Industry 2</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth variant="outlined" required>
-                  <InputLabel id="size-label">Size</InputLabel>
-                  <Select
-                    labelId="size-label"
-                    value={size}
-                    onChange={(e) => setSize(e.target.value)}
-                    label="Size"
-                  >
-                    <MenuItem value="small">Small</MenuItem>
-                    <MenuItem value="medium">Medium</MenuItem>
-                    <MenuItem value="large">Large</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <PrimaryButton type="submit">
-                  Submit
-                </PrimaryButton>
-              </Grid>
-            </Grid>
-          </form>
-        </CardContent>
-      </StyledCard>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <StyledCard variant="outlined">
+            <CardContent>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Grid container spacing={0}>
+                  <Grid item xs={12} sm={6}>
+                    <FormField
+                      label="Organization Name"
+                      control={control}
+                      name="organizationName"
+                      inputRules={{ required: "Organization name is required" }}
+                      errors={errors}
+                      fullWidth
+                      style={{ marginBottom: '20px' }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormField
+                      label="Email"
+                      control={control}
+                      name="email"
+                      inputRules={{ required: "Email is required" }}
+                      errors={errors}
+                      fullWidth
+                      style={{ marginBottom: '20px' }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormField
+                      label="Phone Number"
+                      control={control}
+                      name="phoneNumber"
+                      inputRules={{ required: "Phone number is required" }}
+                      errors={errors}
+                      fullWidth
+                      style={{ marginBottom: '20px' }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormField
+                      label="Address"
+                      control={control}
+                      name="address"
+                      inputRules={{ required: "Address is required" }}
+                      errors={errors}
+                      fullWidth
+                      style={{ marginBottom: '20px' }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormField
+                      label="Website"
+                      control={control}
+                      name="website"
+                      inputRules={{ required: "Website is required" }}
+                      errors={errors}
+                      fullWidth
+                      style={{ marginBottom: '20px' }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormField
+                      label="Industry"
+                      control={control}
+                      name="industry"
+                      select
+                      options={[
+                        { label: 'Industry 1', value: 'industry1' },
+                        { label: 'Industry 2', value: 'industry2' },
+                      ]}
+                      inputRules={{ required: 'Industry is required' }}
+                      errors={errors}
+                      fullWidth
+                      style={{ marginBottom: '20px' }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormField
+                      label="Size"
+                      control={control}
+                      name="size"
+                      select
+                      options={[
+                        { label: 'Small', value: 'small' },
+                        { label: 'Medium', value: 'medium' },
+                        { label: 'Large', value: 'large' },
+                      ]}
+                      inputRules={{ required: 'Size is required' }}
+                      errors={errors}
+                      fullWidth
+                      style={{ marginBottom: '20px' }}
+                    />
+                  </Grid>
+                </Grid>
+                <PrimaryButton type="submit">Submit</PrimaryButton>
+              </form>
+            </CardContent>
+          </StyledCard>
+        </Grid>
+      </Grid>
     </PageContainer>
   );
 };

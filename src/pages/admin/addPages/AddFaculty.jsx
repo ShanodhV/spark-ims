@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Card, CardContent, Grid, TextField } from '@mui/material';
+import React from 'react';
+import { Card, CardContent, Grid } from '@mui/material';
 import styled from 'styled-components';
 import PrimaryButton from '../../../components/PrimaryButton';
+import FormField from '../../../components/FormField'; // Importing FormField component
+import { useForm } from 'react-hook-form';
 
 const PageContainer = styled.div`
   padding: 20px;
@@ -34,20 +36,14 @@ const StyledCard = styled(Card)`
 `;
 
 const AddFaculty = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const { control, handleSubmit, reset, formState: { errors } } = useForm(); // Destructure errors from formState
 
   const heading = 'Add Faculty';
   const path = ['Admin', 'Add Faculty'];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add logic to handle form submission
-    console.log('Faculty Name:', name);
-    console.log('Description:', description);
-    // Reset the input fields after submission
-    setName('');
-    setDescription('');
+  const onSubmit = (data) => {
+    console.log(data);
+    reset();
   };
 
   return (
@@ -60,30 +56,27 @@ const AddFaculty = () => {
         <Grid item xs={12}>
           <StyledCard variant="outlined">
             <CardContent>
-              <form onSubmit={handleSubmit}>
-                <TextField
-                  fullWidth
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <FormField
                   label="Faculty Name"
-                  variant="outlined"
-                  margin="normal"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-                <TextField
+                  control={control}
+                  name="facultyName"
+                  inputRules={{ required: "Faculty name is required" }} // Providing validation rule
+                  errors={errors}
                   fullWidth
-                  label="Description"
-                  variant="outlined"
-                  margin="normal"
-                  multiline
-                  rows={4}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  required
+                  style={{ marginBottom: '20px' }}
                 />
-                <PrimaryButton type="submit">
-                  Submit
-                </PrimaryButton>
+                <FormField
+                  label="Department"
+                  control={control}
+                  name="department"
+                  inputRules={{ required: "Department is required" }} // Providing validation rule
+                  errors={errors}
+                  fullWidth
+                  style={{ marginBottom: '20px' }}
+                  rows={6}
+                />
+                <PrimaryButton type="submit">Submit</PrimaryButton>
               </form>
             </CardContent>
           </StyledCard>

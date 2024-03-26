@@ -1,11 +1,10 @@
-import React from 'react';
-import { Card, CardContent, Grid } from '@mui/material';
+import React, { useState } from 'react';
+import { Card, CardContent, Grid, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import { AddCircle, Visibility, Edit, Delete } from '@mui/icons-material';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom';
 import PrimaryButton from '../../components/PrimaryButton';
 import CustomDataGrid from '../../components/CustomDataGrid';
-
 
 const PageContainer = styled.div`
   padding: 20px;
@@ -46,6 +45,37 @@ const Batches = () => {
   const heading = 'Batches';
   const path = ['Admin', 'Batches'];
 
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [rowData, setRowData] = useState({});
+
+  const handleEditClick = (row) => {
+    console.log('Editing row:', row);
+  };
+
+  const handleDeleteClick = (row) => {
+    console.log('Deleting row:', row);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleViewClick = (row) => {
+    setRowData(row);
+    setViewDialogOpen(true);
+  };
+
+  const handleCloseViewDialog = () => {
+    setViewDialogOpen(false);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+  };
+
+  const handleConfirmDelete = (row) => {
+    console.log('Confirmed deletion of row:', row);
+    setDeleteDialogOpen(false);
+  };
+
   const rows = [
     { id: 1, academicYear: '2022-2023', batch: 'Batch A' },
     { id: 2, academicYear: '2023-2024', batch: 'Batch B' },
@@ -59,11 +89,11 @@ const Batches = () => {
       field: 'actions',
       headerName: 'Actions',
       width: 200,
-      renderCell: () => (
+      renderCell: (params) => (
         <div>
-          <Visibility color="primary" style={{ cursor: 'pointer', marginRight: 5 }} />
-          <Edit color="primary" style={{ cursor: 'pointer', marginRight: 5 }} />
-          <Delete color="error" style={{ cursor: 'pointer' }} />
+          <Visibility color="primary" style={{ cursor: 'pointer', marginRight: 5 }} onClick={() => handleViewClick(params.row)} />
+          <Edit color="primary" style={{ cursor: 'pointer', marginRight: 5 }} onClick={() => handleEditClick(params.row)} />
+          <Delete color="error" style={{ cursor: 'pointer' }} onClick={() => handleDeleteClick(params.row)} />
         </div>
       ),
     },
@@ -94,6 +124,36 @@ const Batches = () => {
           </Grid>
         </Grid>
       </BatchesContent>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onClose={handleCloseDeleteDialog}>
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          Are you sure you want to delete this batch?
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDeleteDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => handleConfirmDelete()} color="primary" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* View Dialog */}
+      <Dialog open={viewDialogOpen} onClose={handleCloseViewDialog}>
+        <DialogTitle>View Batch Details</DialogTitle>
+        <DialogContent>
+          <p>Academic Year: {rowData.academicYear}</p>
+          <p>Batch: {rowData.batch}</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseViewDialog} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </PageContainer>
   );
 };

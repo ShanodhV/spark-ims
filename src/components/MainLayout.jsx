@@ -11,6 +11,7 @@ const ContentContainer = styled.div`
   margin-left: ${(props) => (props.isSidebarOpen ? '346px' : '0')};
   transition: margin-left 0.3s ease;
   overflow-y: auto; /* Ensure vertical scrolling */
+  
 `;
 
 const MainLayout = ({ children, darkMode, toggleDarkMode }) => {

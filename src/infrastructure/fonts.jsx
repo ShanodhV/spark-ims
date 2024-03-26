@@ -20,7 +20,7 @@ export const fontSizes = {
     form: "18px",
     copyright: "12px",
     body: "18px",
-    title: "20px",
+    title: "24px",
     heading: "40px",
     headingText: "28px",
     h5: "24px",

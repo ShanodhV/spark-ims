@@ -29,17 +29,10 @@ const Path = styled.div`
   font-size: ${(props) => props.theme.fontSizes.form};
   font-weight: ${(props) => props.theme.fontWeights.medium};
 `;
-const LabelTypography = styled(Typography)`
-&& {
-  color: ${(props) => props.theme.colors.text.secondary};
-  font-family: ${(props) => props.theme.fonts.body};
-  font-size: ${(props) => props.theme.fontSizes.body};
-  font-weight: ${(props) => props.theme.fontWeights.bold};
-}
-`;
-const Evaluation = () => {
+
+const HODEvaluation = () => {
   const heading = 'Evaluation Page';
-  const path = ['Dean', 'Evaluation'];
+  const path = ['HOD', 'Evaluation'];
 
   // Sample data for the table
   const rows = [
@@ -64,7 +57,8 @@ const Evaluation = () => {
           <Heading>{heading}</Heading>
           <Path>{path.join(' / ')}</Path>
         </HeadingContainer>
-        <LabelTypography variant="body1">Evaluation Table</LabelTypography>        <CustomDataGrid
+        <Typography variant="h6">Evaluation Table</Typography>
+        <CustomDataGrid
           rows={rows}
           columns={columns}
           pageSize={5}
@@ -74,4 +68,4 @@ const Evaluation = () => {
   );
 };
 
-export default Evaluation;
+export default HODEvaluation;

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Card, CardContent, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Typography } from '@mui/material';
+import React from 'react';
+import { Card, CardContent, Grid } from '@mui/material';
 import styled from 'styled-components';
 import PrimaryButton from '../../../components/PrimaryButton';
+import FormField from '../../../components/FormField'; // Import the updated FormField component
+import { useForm } from 'react-hook-form';
 
 const PageContainer = styled.div`
   padding: 20px;
@@ -34,26 +36,14 @@ const StyledCard = styled(Card)`
 `;
 
 const AddDegree = () => {
-  const [degreeName, setDegreeName] = useState('');
-  const [description, setDescription] = useState('');
-  const [faculty, setFaculty] = useState('');
-  const [department, setDepartment] = useState('');
+  const { control, handleSubmit, reset } = useForm(); // Destructure control, handleSubmit, and reset from useForm
 
   const heading = 'Add Degree';
   const path = ['Admin', 'Add Degree'];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add logic to handle form submission
-    console.log('Degree Name:', degreeName);
-    console.log('Description:', description);
-    console.log('Faculty:', faculty);
-    console.log('Department:', department);
-    // Reset the input fields after submission
-    setDegreeName('');
-    setDescription('');
-    setFaculty('');
-    setDepartment('');
+  const onSubmit = (data) => {
+    console.log(data);
+    reset();
   };
 
   return (
@@ -64,58 +54,45 @@ const AddDegree = () => {
       </HeadingContainer>
       <StyledCard variant="outlined">
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Degree Name"
-                  variant="outlined"
-                  value={degreeName}
-                  onChange={(e) => setDegreeName(e.target.value)}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth variant="outlined" required>
-                  <InputLabel id="faculty-label">Faculty</InputLabel>
-                  <Select
-                    labelId="faculty-label"
-                    value={faculty}
-                    onChange={(e) => setFaculty(e.target.value)}
-                    label="Faculty"
-                  >
-                    <MenuItem value="faculty1">Faculty 1</MenuItem>
-                    <MenuItem value="faculty2">Faculty 2</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl fullWidth variant="outlined" required>
-                  <InputLabel id="department-label">Department</InputLabel>
-                  <Select
-                    labelId="department-label"
-                    value={department}
-                    onChange={(e) => setDepartment(e.target.value)}
-                    label="Department"
-                  >
-                    <MenuItem value="department1">Department 1</MenuItem>
-                    <MenuItem value="department2">Department 2</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Description"
-                  variant="outlined"
-                  multiline
-                  rows={4}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  required
-                />
-              </Grid>
+              <FormField
+                label="Degree Name"
+                control={control}
+                name="degreeName"
+                inputRules={{ required: 'Degree name is required' }}
+              />
+              <FormField
+                label="Faculty"
+                control={control}
+                name="faculty"
+                select
+                options={[
+                  { label: 'Faculty 1', value: 'faculty1' },
+                  { label: 'Faculty 2', value: 'faculty2' },
+                ]}
+                inputRules={{ required: 'Faculty is required' }}
+              />
+              <FormField
+                label="Department"
+                control={control}
+                name="department"
+                rows={2}
+                select
+                options={[
+                  { label: 'Department 1', value: 'department1' },
+                  { label: 'Department 2', value: 'department2' },
+                ]}
+                inputRules={{ required: 'Department is required' }}
+              />
+              <FormField
+                label="Description"
+                control={control}
+                name="description"
+                multiline
+                rows={2}
+                inputRules={{ required: 'Description is required' }}
+              />
               <Grid item xs={12}>
                 <PrimaryButton type="submit">
                   Submit

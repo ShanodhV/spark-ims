@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Card, CardContent, Grid, TextField, FormControl, InputLabel, Select, MenuItem, FormGroup, FormControlLabel, Switch, Typography } from '@mui/material';
+import React from 'react';
+import { Card, CardContent, Grid, FormGroup, FormControlLabel, Switch, Typography } from '@mui/material';
 import styled from 'styled-components';
 import PrimaryButton from '../../../components/PrimaryButton';
-import { AddCircle } from '@mui/icons-material';
+import FormField from '../../../components/FormField'; // Import the updated FormField component
+import { useForm } from 'react-hook-form';
 
 const PageContainer = styled.div`
   padding: 20px;
@@ -35,35 +36,14 @@ const StyledCard = styled(Card)`
 `;
 
 const AddDepartment = () => {
-  const [faculty, setFaculty] = useState('');
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [logo, setLogo] = useState(null);
-  const [internshipModelActivated, setInternshipModelActivated] = useState(false);
-  const [projectModelActivated, setProjectModelActivated] = useState(false);
-  const [researchModelActivated, setResearchModelActivated] = useState(false);
+  const { control, handleSubmit, reset } = useForm(); // Destructure control, handleSubmit, and reset from useForm
 
   const heading = 'Add Department';
   const path = ['Admin', 'Add Department'];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add logic to handle form submission
-    console.log('Faculty:', faculty);
-    console.log('Department Name:', name);
-    console.log('Description:', description);
-    console.log('Logo:', logo);
-    console.log('Internship Model Activated:', internshipModelActivated);
-    console.log('Project Model Activated:', projectModelActivated);
-    console.log('Research Model Activated:', researchModelActivated);
-    // Reset the input fields after submission
-    setFaculty('');
-    setName('');
-    setDescription('');
-    setLogo(null);
-    setInternshipModelActivated(false);
-    setProjectModelActivated(false);
-    setResearchModelActivated(false);
+  const onSubmit = (data) => {
+    console.log(data);
+    reset();
   };
 
   return (
@@ -74,73 +54,63 @@ const AddDepartment = () => {
       </HeadingContainer>
       <StyledCard variant="outlined">
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth variant="outlined" required>
-                  <InputLabel id="faculty-label">Faculty</InputLabel>
-                  <Select
-                    labelId="faculty-label"
-                    value={faculty}
-                    onChange={(e) => setFaculty(e.target.value)}
-                    label="Faculty"
-                  >
-                    <MenuItem value="faculty1">Faculty 1</MenuItem>
-                    <MenuItem value="faculty2">Faculty 2</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Department Name"
-                  variant="outlined"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Description"
-                  variant="outlined"
-                  multiline
-                  rows={4}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  required
-                />
-              </Grid>
+              <FormField
+                label="Faculty"
+                control={control}
+                name="faculty"
+                select
+                options={[
+                  { label: 'Faculty 1', value: 'faculty1' },
+                  { label: 'Faculty 2', value: 'faculty2' },
+                ]}
+                inputRules={{ required: 'Faculty is required' }}
+              />
+              <FormField
+                label="Department Name"
+                control={control}
+                name="name"
+                inputRules={{ required: 'Department name is required' }}
+              />
+              <FormField
+                label="Description"
+                control={control}
+                name="description"
+                multiline
+                rows={4}
+                inputRules={{ required: 'Description is required' }}
+              />
               <Grid item xs={12} sm={6}>
                 <input
                   accept="image/*"
                   style={{ display: 'none' }}
                   id="logo-input"
                   type="file"
-                  onChange={(e) => setLogo(e.target.files[0])}
+                  onChange={(e) => {}}
                 />
                 <label htmlFor="logo-input">
-                  <PrimaryButton component="span" startIcon={<AddCircle />}>
+                  <PrimaryButton component="span">
                     Upload Logo
                   </PrimaryButton>
                 </label>
-                {logo && <Typography>{logo.name}</Typography>}
+                {/* Display uploaded logo name */}
+                <Typography>No file chosen</Typography>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormGroup>
+              <Grid item xs={12} sm={3}>
+                <FormGroup style={{ justifyContent: 'flex-end' }}>
                   <FormControlLabel
-                    control={<Switch color="success" checked={internshipModelActivated} onChange={(e) => setInternshipModelActivated(e.target.checked)} />}
+                    control={<Switch color="success" />}
                     label="Internship Model Activated"
                     labelPlacement="start"
                   />
                   <FormControlLabel
-                    control={<Switch color="success" checked={projectModelActivated} onChange={(e) => setProjectModelActivated(e.target.checked)} />}
+                    control={<Switch color="success" />}
                     label="Project Model Activated"
                     labelPlacement="start"
                   />
                   <FormControlLabel
-                    control={<Switch color="success" checked={researchModelActivated} onChange={(e) => setResearchModelActivated(e.target.checked)} />}
+                    control={<Switch color="success" />}
                     label="Research Model Activated"
                     labelPlacement="start"
                   />

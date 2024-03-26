@@ -1,8 +1,10 @@
 import React from 'react';
+import Navbar from '../../components/navbar'; 
 import styled from 'styled-components';
 import { Card, CardContent, Typography, Grid, Button } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import Sidebar from '../../components/sidebar';
 
 const ContentContainer = styled.div`
   padding: 20px;
@@ -87,9 +89,9 @@ const StyledAutocomplete = styled(Autocomplete)`
   }
 `;
 
-const DeanDashboard = () => {
+const CDashboard = () => {
   const heading = 'Dashboard';
-  const path = ['Dean', 'Dashboard'];
+  const path = ['Coordinator', 'Dashboard'];
 
   return (
     <>
@@ -135,8 +137,7 @@ const DeanDashboard = () => {
           <CardContent>
             <Content>
               <NumberText>2</NumberText>
-              <EnrolledStudentText variant="body1">Ongoing Internship</EnrolledStudentText>              
-              <ViewButton variant="contained">View</ViewButton>
+              <EnrolledStudentText variant="body1">Enrolled Student</EnrolledStudentText>              <ViewButton variant="contained">View</ViewButton>
             </Content>
           </CardContent>
         </CardContainer>
@@ -146,8 +147,7 @@ const DeanDashboard = () => {
           <CardContent>
             <Content>
               <NumberText>3</NumberText>
-              <EnrolledStudentText variant="body1">Pending Student</EnrolledStudentText>              
-              <ViewButton variant="contained">View</ViewButton>
+              <EnrolledStudentText variant="body1">Enrolled Student</EnrolledStudentText>              <ViewButton variant="contained">View</ViewButton>
             </Content>
           </CardContent>
         </CardContainer>
@@ -157,8 +157,7 @@ const DeanDashboard = () => {
           <CardContent>
             <Content>
               <NumberText>4</NumberText>
-              <EnrolledStudentText variant="body1">Organization</EnrolledStudentText>              
-              <ViewButton variant="contained">View</ViewButton>
+              <EnrolledStudentText variant="body1">Enrolled Student</EnrolledStudentText>              <ViewButton variant="contained">View</ViewButton>
             </Content>
           </CardContent>
         </CardContainer>
@@ -168,8 +167,7 @@ const DeanDashboard = () => {
           <CardContent>
             <Content>
               <NumberText>5</NumberText>
-              <EnrolledStudentText variant="body1">Completed</EnrolledStudentText>              
-              <ViewButton variant="contained">View</ViewButton>
+              <EnrolledStudentText variant="body1">Enrolled Student</EnrolledStudentText>              <ViewButton variant="contained">View</ViewButton>
             </Content>
           </CardContent>
         </CardContainer>
@@ -178,4 +176,4 @@ const DeanDashboard = () => {
   );
 };
 
-export default DeanDashboard;
+export default CDashboard;

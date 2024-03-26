@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Card, CardContent, Grid, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import React from 'react';
+import { Card, CardContent, Grid } from '@mui/material';
 import styled from 'styled-components';
 import PrimaryButton from '../../../components/PrimaryButton';
+import FormField from '../../../components/FormField'; // Import the updated FormField component
+import { useForm } from 'react-hook-form';
 
 const PageContainer = styled.div`
   padding: 20px;
@@ -34,23 +36,14 @@ const StyledCard = styled(Card)`
 `;
 
 const AddUser = () => {
-  const [role, setRole] = useState('');
-  const [email, setEmail] = useState('');
-  const [fullName, setFullName] = useState('');
+  const { control, handleSubmit, reset, formState: { errors } } = useForm(); // Destructure errors from formState
 
   const heading = 'Add User';
   const path = ['Admin', 'Add User'];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add logic to handle form submission
-    console.log('Role:', role);
-    console.log('Email:', email);
-    console.log('Full Name:', fullName);
-    // Reset the input fields after submission
-    setRole('');
-    setEmail('');
-    setFullName('');
+  const onSubmit = (data) => {
+    console.log(data);
+    reset();
   };
 
   return (
@@ -61,46 +54,41 @@ const AddUser = () => {
       </HeadingContainer>
       <StyledCard variant="outlined">
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth variant="outlined" required>
-                  <InputLabel id="role-label">Role</InputLabel>
-                  <Select
-                    labelId="role-label"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    label="Role"
-                  >
-                    <MenuItem value="role1">Role 1</MenuItem>
-                    <MenuItem value="role2">Role 2</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Email Address"
-                  variant="outlined"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  label="Full Name"
-                  variant="outlined"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  required
-                />
-              </Grid>
+              <FormField
+                label="Role"
+                control={control}
+                name="role"
+                select
+                options={[
+                  { label: 'Role 1', value: 'role1' },
+                  { label: 'Role 2', value: 'role2' },
+                ]}
+                inputRules={{ required: 'Role is required' }}
+                errors={errors}
+                xs={12}
+                sm={6}
+              />
+              <FormField
+                label="Email Address"
+                control={control}
+                name="email"
+                inputRules={{ required: 'Email is required' }}
+                errors={errors}
+                xs={12}
+                sm={6}
+              />
+              <FormField
+                label="Full Name"
+                control={control}
+                name="fullName"
+                inputRules={{ required: 'Full name is required' }}
+                errors={errors}
+                xs={12}
+              />
             </Grid>
-            <PrimaryButton type="submit">
-              Submit
-            </PrimaryButton>
+            <PrimaryButton type="submit">Submit</PrimaryButton>
           </form>
         </CardContent>
       </StyledCard>

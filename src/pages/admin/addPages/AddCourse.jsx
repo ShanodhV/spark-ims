@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardContent, Grid } from '@mui/material';
 import styled from 'styled-components';
 import PrimaryButton from '../../../components/PrimaryButton';
-import FormField from '../../../components/FormField.jsx';
+import FormField from '../../../components/FormField'; // Import the updated FormField component
+import { useForm } from 'react-hook-form';
 
 const PageContainer = styled.div`
   padding: 20px;
@@ -35,36 +36,10 @@ const StyledCard = styled(Card)`
 `;
 
 const AddCourse = () => {
-  const [courseName, setCourseName] = useState('');
-  const [faculty, setFaculty] = useState('');
-  const [department, setDepartment] = useState('');
-  const [degreeProgram, setDegreeProgram] = useState('');
-  const [description, setDescription] = useState('');
-  const [numberOfHours, setNumberOfHours] = useState('');
-  const [courseType, setCourseType] = useState('');
+  const { control, handleSubmit, reset, formState: { errors } } = useForm(); // Destructure errors from formState
 
   const heading = 'Add Course';
   const path = ['Admin', 'Add Course'];
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add logic to handle form submission
-    console.log('Course Name:', courseName);
-    console.log('Faculty:', faculty);
-    console.log('Department:', department);
-    console.log('Degree Program:', degreeProgram);
-    console.log('Description:', description);
-    console.log('Number of Hours:', numberOfHours);
-    console.log('Course Type:', courseType);
-    // Reset the input fields after submission
-    setCourseName('');
-    setFaculty('');
-    setDepartment('');
-    setDegreeProgram('');
-    setDescription('');
-    setNumberOfHours('');
-    setCourseType('');
-  };
 
   const facultyOptions = [
     { label: 'Faculty 1', value: 'faculty1' },
@@ -86,6 +61,11 @@ const AddCourse = () => {
     { label: 'Course Type 2', value: 'courseType2' },
   ];
 
+  const onSubmit = (data) => {
+    console.log(data);
+    reset();
+  };
+
   return (
     <PageContainer>
       <HeadingContainer>
@@ -94,67 +74,69 @@ const AddCourse = () => {
       </HeadingContainer>
       <StyledCard variant="outlined">
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2}>
               <FormField
                 label="Course Name"
-                value={courseName}
-                onChange={(e) => setCourseName(e.target.value)}
-                variant="outlined"
-                fullWidth
-              />
+                control={control}
+                name="courseName"
+                inputRules={{ required: "Course name is required" }} // Use inputRules instead of rules
+                errors={errors}
+              /> 
               <FormField
                 label="Faculty"
-                value={faculty}
-                onChange={(e) => setFaculty(e.target.value)}
-                variant="outlined"
+                control={control}
+                name="faculty"
+                inputRules={{ required: "Faculty is required" }}
                 select
                 options={facultyOptions}
+                errors={errors}
               />
               <FormField
                 label="Department"
-                value={department}
-                onChange={(e) => setDepartment(e.target.value)}
-                variant="outlined"
+                control={control}
+                name="department"
+                inputRules={{ required: "Department is required" }}
                 select
                 options={departmentOptions}
+                errors={errors}
               />
               <FormField
                 label="Degree Program"
-                value={degreeProgram}
-                onChange={(e) => setDegreeProgram(e.target.value)}
-                variant="outlined"
+                control={control}
+                name="degreeProgram"
+                inputRules={{ required: "Degree program is required" }}
                 select
                 options={degreeProgramOptions}
+                errors={errors}
               />
               <FormField
                 label="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                variant="outlined"
-                fullWidth
+                control={control}
+                name="description"
+                inputRules={{ required: "Description is required" }}
                 multiline
                 rows={4}
+                errors={errors}
               />
               <FormField
                 label="Number of Hours"
-                value={numberOfHours}
-                onChange={(e) => setNumberOfHours(e.target.value)}
-                variant="outlined"
-                fullWidth
+                control={control}
+                name="numberOfHours"
+                inputRules={{ required: "Number of hours is required" }}
+                errors={errors}
               />
               <FormField
                 label="Course Type"
-                value={courseType}
-                onChange={(e) => setCourseType(e.target.value)}
-                variant="outlined"
+                control={control}
+                name="courseType"
+                inputRules={{ required: "Course type is required" }}
                 select
                 options={courseTypeOptions}
+                errors={errors}
               />
             </Grid>
-            <PrimaryButton type="submit">
-              Submit
-            </PrimaryButton>
+            <PrimaryButton type="submit">Submit</PrimaryButton>
           </form>
         </CardContent> 
       </StyledCard>

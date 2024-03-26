@@ -37,9 +37,10 @@ const LabelTypography = styled(Typography)`
   font-weight: ${(props) => props.theme.fontWeights.bold};
 }
 `;
-const Evaluation = () => {
+
+const IsEvaluation = () => {
   const heading = 'Evaluation Page';
-  const path = ['Dean', 'Evaluation'];
+  const path = ['Supervisor', 'Evaluation'];
 
   // Sample data for the table
   const rows = [
@@ -64,7 +65,8 @@ const Evaluation = () => {
           <Heading>{heading}</Heading>
           <Path>{path.join(' / ')}</Path>
         </HeadingContainer>
-        <LabelTypography variant="body1">Evaluation Table</LabelTypography>        <CustomDataGrid
+        <LabelTypography variant="body1">Evaluation Table</LabelTypography>
+        <CustomDataGrid
           rows={rows}
           columns={columns}
           pageSize={5}
@@ -74,4 +76,4 @@ const Evaluation = () => {
   );
 };
 
-export default Evaluation;
+export default IsEvaluation;

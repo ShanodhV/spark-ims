@@ -37,9 +37,10 @@ const LabelTypography = styled(Typography)`
   font-weight: ${(props) => props.theme.fontWeights.bold};
 }
 `;
-const Evaluation = () => {
+
+const CEvaluation = () => {
   const heading = 'Evaluation Page';
-  const path = ['Dean', 'Evaluation'];
+  const path = ['Coordinator', 'Evaluation'];
 
   // Sample data for the table
   const rows = [
@@ -74,4 +75,4 @@ const Evaluation = () => {
   );
 };
 
-export default Evaluation;
+export default CEvaluation;
